@@ -457,6 +457,17 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .pj-meta dt{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .pj-meta dd{margin:.1rem 0 0;font-size:.92rem;font-weight:600;color:var(--ink)}
 .pj .chips{margin-top:.3rem}
+@media (min-width:861px){
+  .pj{height:350px;min-height:0}
+  .pj-body{padding:1.5rem 2.2rem 1.4rem 1rem;gap:.5rem;overflow:hidden;justify-content:center}
+  .pj h3{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:clamp(1.2rem,1.9vw,1.5rem)}
+  .pj-sum{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.94rem}
+  .pj .chips{flex-wrap:nowrap;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+  .pj .chips .chip{flex:none}
+  .pj-meta{gap:.3rem 1.4rem}
+  .pj-actions{margin-top:.2rem}
+  .pj-body>*{flex-shrink:0}
+}
 .pj-actions{margin-top:.6rem}
 @media (max-width:860px){
   .pj{grid-template-columns:1fr;min-height:0}
