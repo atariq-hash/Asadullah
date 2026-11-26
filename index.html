@@ -334,6 +334,18 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .mini{display:inline-flex;align-items:center;gap:.3rem;padding:.3rem .75rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--accent);font-size:.82rem;font-weight:600;text-decoration:none;cursor:pointer}
 .mini:hover{border-color:var(--accent)}
 .mini svg{width:13px;height:13px}
+/* metric badges */
+.m-q,.m-if,.m-rank{display:inline-flex;align-items:baseline;gap:.3rem;font-family:var(--sans);line-height:1;border-radius:8px;padding:.32rem .6rem;font-variant-numeric:tabular-nums lining-nums}
+.m-q{font-size:.82rem;font-weight:800;letter-spacing:.02em;color:#fff;background:linear-gradient(135deg,#F7B500,#E07B00);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 3px 8px -4px rgba(224,123,0,.8)}
+.m-q.m-q2{background:linear-gradient(135deg,#5BA8FF,#2F6FE0);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 3px 8px -4px rgba(47,111,224,.8)}
+.m-q.m-q3,.m-q.m-q4{background:linear-gradient(135deg,#9AA0B8,#6C6788)}
+.m-if{font-size:.9rem;font-weight:700;color:var(--ink);background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line))}
+.m-if small,.m-rank small{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.m-rank{font-size:.86rem;font-weight:800;border:1px solid var(--line);background:var(--sunk);color:var(--ink)}
+.m-rank.r-top{background:linear-gradient(135deg,#5B3DF5,#3B20C9);color:#fff;border-color:transparent;box-shadow:0 3px 8px -4px rgba(65,38,224,.8)}
+.m-rank.r-top small{color:rgba(255,255,255,.75)}
+.m-rank.r-a{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.m-rank.r-a small{color:var(--accent);opacity:.75}
 /* service v2 */
 .lead{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1rem}
 .lead-card{display:grid;grid-template-columns:74px 1fr;gap:1rem;padding:1.2rem 1.3rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);position:relative;overflow:hidden}
@@ -1209,12 +1221,22 @@ function visitCard(u){
 }
 const boldSelf=s=>{let h=esc(s);(SITE.selfNames||[SITE.selfName]).forEach(n=>{h=h.split(esc(n)).join(`<b>${esc(n)}</b>`)});return h};
 const pubLogo=p=>{const v=p.venue;if(/IEEE|ACM\/IEEE/.test(v))return"pub_ieee_mark";if(/Nature|Springer/.test(v))return"pub_springer";if(/Elsevier/.test(v))return"pub_elsevier";if(/EAI/.test(v))return"pub_eai";if(/ACM/.test(v))return"pub_acm";return""};
+function metrics(b){
+  if(!b)return"";
+  const q=(b.match(/Q[1-4]/)||[])[0], f=(b.match(/IF\s*([\d.]+)/)||[])[1], r=(b.match(/Rank\s*(A\*|A|B|C)/)||[])[1], fl=/Flagship/.test(b);
+  let h="";
+  if(q)h+=`<span class="m-q m-${q.toLowerCase()}" title="Journal quartile">${q}</span>`;
+  if(f)h+=`<span class="m-if" title="Impact factor"><small>IF</small>${esc(f)}</span>`;
+  if(r)h+=`<span class="m-rank ${r==="A*"?"r-top":r==="A"?"r-a":"r-b"}" title="CORE conference rank"><small>Rank</small>${esc(r)}</span>`;
+  if(fl)h+=`<span class="m-rank r-top" title="Flagship conference">Flagship</span>`;
+  return h||`<span class="tag badge">${esc(b)}</span>`;
+}
 const TYPE={journal:"Journal",conference:"Conference",book:"Book chapter"};
 function pubCard(p){
   const lg=pubLogo(p);
   const cite=`${p.authors}, “${p.title},” ${p.venue}, ${p.year}.${p.doi?" doi:"+p.doi:""}`;
   return `<li class="pc${p.award?" has-award":""}">
-    <div class="pc-top"><span class="tag t-${p.type}">${TYPE[p.type]||p.type}</span>${p.badge?`<span class="tag badge${/A\*|Flagship|Q1/.test(p.badge)?" top":""}">${esc(p.badge)}</span>`:""}${p.status==="accepted"?`<span class="tag acc">Accepted</span>`:""}${lg?`<img class="pc-logo" src="${ASSETS[lg]}" alt="">`:""}</div>
+    <div class="pc-top"><span class="tag t-${p.type}">${TYPE[p.type]||p.type}</span>${metrics(p.badge)}${p.status==="accepted"?`<span class="tag acc">Accepted</span>`:""}${lg?`<img class="pc-logo" src="${ASSETS[lg]}" alt="">`:""}</div>
     <h4>${esc(p.title)}</h4>
     <p class="au">${boldSelf(p.authors)}</p>
     <p class="ve">${esc(p.venue)}</p>
