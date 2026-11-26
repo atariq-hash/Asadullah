@@ -887,7 +887,7 @@ const SITE = {
     { label: "TrustNet.AI Lab", icon: "lab", url: "https://atariq-hash.github.io/TrustNet.AI/" }
   ],
   subjects: ["Computer Science", "Artificial Intelligence"],
-  topics: ["Trustworthy AI", "Explainable AI", "Federated learning", "Causal AI", "Physical AI", "Quantum machine learning", "Internet of Things", "Digital twins", "Edge AI", "Game theory and optimisation", "Cloud computing", "LLMs and agentic AI", "Data structures"],
+  topics: ["Trustworthy AI", "Explainable AI", "Federated learning", "Causal AI", "Physical AI", "Quantum machine learning", "Internet of Things", "Digital twins", "Edge AI", "Game theory and optimisation", "Cloud computing", "LLMs and agentic AI"],
   bio: [
     "Asadullah Tariq is an Assistant Professor of AI and Robotics at New Uzbekistan University and a Postdoctoral Researcher at the College of Technological Innovation, Zayed University. He leads the TrustNet.AI Lab, which builds trustworthy, privacy-preserving AI for connected systems.",
     "He completed his PhD in Computing and Informatics at the United Arab Emirates University (2022 to 2025) with a thesis on a trustworthy federated learning framework for secure, efficient and quality-aware distributed AI, and was a visiting researcher at Queen Mary University of London.",
@@ -1457,7 +1457,7 @@ about(){
       <span class="sc-wm-box" aria-hidden="true"><img class="sc-wm" src="${ASSETS.card_bg}" alt=""></span><div class="photo-wrap"><img class="photo" src="${ASSETS.photo}" alt="Portrait of ${esc(SITE.name)}"><a class="photo-badge" href="#teaching" title="New Uzbekistan University"><img src="${ASSETS.nuu_card}" alt="New Uzbekistan University"></a></div>
       <ul class="rows">
         <li><span>${I.cap}</span><span class="lab">Subjects</span><span class="val">${SITE.subjects.map(esc).join(", ")}</span></li>
-        <li class="stack"><span>${I.tag}</span><span class="lab">Course and research topics</span><div class="val"><ul class="chips tgrid">${SITE.topics.map(t=>`<li class="chip">${esc(t)}</li>`).join("")}</ul></div></li>
+        <li class="stack"><span>${I.tag}</span><span class="lab">Research topics</span><div class="val"><ul class="chips tgrid">${SITE.topics.map(t=>`<li class="chip">${esc(t)}</li>`).join("")}</ul></div></li>
         <li class="stack"><span>${I.link}</span><span class="lab">Profiles</span><div class="val"><ul class="chips">${SITE.links.map(l=>`<li><a class="chip plink" href="${esc(l.url)}" target="_blank" rel="noopener">${profIcon(l.icon)}${esc(l.label)}</a></li>`).join("")}</ul></div></li>
       </ul>
     </aside>
