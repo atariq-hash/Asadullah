@@ -687,7 +687,7 @@ const cIds=c=>c.unis||[c.uni];
 const cUnis=c=>cIds(c).map(uni);
 const profIcon=k=>k==="lab"?`<span class="plogo"><svg viewBox="-16 -34 200 168" aria-hidden="true"><use href="#tnlogo" width="535" height="100"/></svg></span>`:(ASSETS[k]?`<span class="plogo"><img src="${ASSETS[k]}" alt=""></span>`:"");
 function uniMarquee(){
-  const item=(u,hidden)=>`<a class="mq-item" href="#teaching"${hidden?' aria-hidden="true" tabindex="-1"':""}><span class="mq-logo">${logo(u.main||u.id,hidden?"":u.name)}</span><span class="mq-name">${esc(u.name)}</span>${u.years?`<span class="mq-years">${esc(u.years)}</span>`:""}${u.current?'<span class="pill">Active</span>':`<span class="mq-place">${esc(u.place)}</span>`}</a>`;
+  const item=(u,hidden)=>`<a class="mq-item" href="#teaching"${hidden?' aria-hidden="true" tabindex="-1"':""}><span class="mq-logo">${logo(u.main||u.id,hidden?"":u.name)}</span><span class="mq-name">${esc(u.name)}</span>${u.current?'<span class="pill">Active</span>':`<span class="mq-place">${esc(u.place)}</span>`}</a>`;
   const reps=Math.max(2,Math.ceil(8/SITE.universities.length));
   const half=i=>Array.from({length:reps},(_,r)=>SITE.universities.map(u=>item(u,i>0||r>0)).join("")).join("");
   return `<div class="marquee" role="region" aria-label="Universities where I teach"><div class="mq-track">${half(0)}${half(1)}</div></div>`;
@@ -737,7 +737,7 @@ about(){
     </aside>
   </div>
   <div class="wrap">
-    <section class="section"><div class="shead"><h2>Where I teach</h2><p>Four universities across the UAE, Uzbekistan and Pakistan.</p></div>
+    <section class="section"><div class="shead"><h2>Where I teach</h2><a class="btn" href="#teaching">View campuses and years</a></div>
       ${uniMarquee()}
     </section>
     <section class="section"><h2>Courses taught by ${esc(SITE.name)}</h2><div class="grid">${SITE.courses.map(courseCard).join("")}</div></section>
