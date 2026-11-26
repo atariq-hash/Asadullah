@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dr. Asadullah Tariq | Teaching, Research and Publications</title>
-<meta name="description" content="Dr. Asadullah Tariq, Assistant Professor of AI and Robotics at New Uzbekistan University: courses, publications, research projects and service.">
+<title>Asadullah Tariq | Teaching, Research and Publications</title>
+<meta name="description" content="Asadullah Tariq, Assistant Professor of AI and Robotics at New Uzbekistan University: courses, publications, research projects and service.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -866,7 +866,7 @@ footer.site-foot h3{color:#fff;font-size:.82rem;font-weight:600;letter-spacing:.
    Images are stored at the bottom of the file in ASSETS.
    ================================================================== */
 const SITE = {
-  name: "Dr. Asadullah Tariq",
+  name: "Asadullah Tariq",
   shortName: "Asadullah Tariq",
   title: "Assistant Professor, AI and Robotics, New Uzbekistan University; Postdoctoral Researcher, College of Technological Innovation, Zayed University",
   email: "a.tariq@ieee.org",
@@ -1801,7 +1801,7 @@ function initChat(){
   fab.innerHTML='<svg class="b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.4 7.6L3 21l1.5-5.2A8.5 8.5 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01" stroke-width="3"/></svg><svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   const panel=document.createElement("section");
   panel.className="chat-panel";panel.hidden=true;panel.setAttribute("aria-label","Chat assistant");
-  panel.innerHTML=`<header class="chat-head" id="chatHead"><img src="${ASSETS.photo}" alt=""><div><strong>Ask about Dr. Tariq</strong><small>Online, drag me anywhere</small></div><span class="grip" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span><button type="button" id="chatClose" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
+  panel.innerHTML=`<header class="chat-head" id="chatHead"><img src="${ASSETS.photo}" alt=""><div><strong>Ask about Asadullah Tariq</strong><small>Online, drag me anywhere</small></div><span class="grip" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></span><button type="button" id="chatClose" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>
     <div class="chat-log" id="chatLog" aria-live="polite"></div>
     <div class="chat-sugs" id="chatSugs"></div>
     <form class="chat-form" id="chatForm"><input id="chatIn" type="text" autocomplete="off" placeholder="Ask about courses, papers, research…" aria-label="Your question"><button type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>`;
@@ -1864,7 +1864,7 @@ function initChat(){
   const has=(q,...w)=>w.some(x=>new RegExp("(^| )"+x).test(q));
   const cl=c=>`<a href="#course-${c.id}">${esc(c.title)}</a>`;
   const uniOf=c=>cUnis(c).map(u=>u.short).join(", ");
-  function greet(){return{html:`Hi! I’m Dr. Asadullah Tariq’s assistant. Ask me about his <b>courses</b>, <b>publications</b>, <b>research</b>, <b>universities</b> or how to <b>contact</b> him.`}}
+  function greet(){return{html:`Hi! I’m Asadullah Tariq’s assistant. Ask me about his <b>courses</b>, <b>publications</b>, <b>research</b>, <b>universities</b> or how to <b>contact</b> him.`}}
   function findUni(q){
     const keys={nuu:["nuu","new uzbekistan","newuu","uzbekistan","tashkent"],uaeu:["uaeu","united arab emirates university","al ain"],cud:["cud","canadian","dubai"],superior:["superior","lahore","pakistan"],qmul:["queen mary","qmul","london"],zu:["zayed","zu ","abu dhabi","postdoc"]};
     return SITE.universities.find(u=>(keys[u.id]||[]).some(k=>q.includes(k)));
@@ -1900,7 +1900,7 @@ function initChat(){
     if(!q)return greet();
     if(/^(hi|hello|hey|salam|assalam|aoa|good (morning|evening|afternoon))\b/.test(q))return greet();
     if(has(q,"thank","thanks","great","nice"))return{html:"You’re welcome! Anything else you’d like to know?"};
-    if(has(q,"contact","email","mail","reach","collaborat","meet","phone"))return{html:`You can email Dr. Tariq at <a href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a>. He’s also on ${SITE.links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(", ")}.`,sugs:["Research","Lab","Courses"]};
+    if(has(q,"contact","email","mail","reach","collaborat","meet","phone"))return{html:`You can email Asadullah Tariq at <a href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a>. He’s also on ${SITE.links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(", ")}.`,sugs:["Research","Lab","Courses"]};
     if(has(q,"material","slide","pdf","lecture","download","notes"))return{html:`Lecture slides are available for ${SITE.courses.filter(c=>c.materials).map(c=>`<a href="#materials-${c.id}">${esc(c.title)}</a> (${c.materials.length} PDFs)`).join(", ")}. Open the page to view or download each lecture.`,sugs:["Courses","Contact"]};
     const c=findCourse(q); if(c)return courseAnswer(c);
     const u=findUni(q);
