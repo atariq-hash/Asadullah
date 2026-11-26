@@ -478,6 +478,9 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 }
 @media (prefers-reduced-motion:reduce){.topic:hover,.pj:hover .pj-media img{transform:none}}
 /* service v2 */
+.hero.bare .hero-body{display:none}
+.hero.bare .nav{padding-bottom:1.2rem}
+.hero.compact .counts{display:none}
 /* compact header on every page except About and course pages */
 .hero.compact .hero-body{padding:.6rem 1.5rem 2.2rem}
 .hero.compact .hero-text{max-width:none}
@@ -1627,7 +1630,7 @@ function route(){
   else if(h==="topics"||h==="group"){v=V.projects();active="projects"}
   else if(V[h]&&h!=="course"){v=V[h]()}
   else{v=V.about();active="about"}
-  const hb=$("#heroBody");hb.innerHTML=v.hero;hb.classList.toggle("hero-has-card",!!v.card);$("#hero").classList.toggle("compact",!v.card);
+  const bare=!v.card&&(NAVFLAT.some(n=>n[0]===h)||h==="topics"||h==="group")&&active!=="about";const hb=$("#heroBody");hb.innerHTML=bare?"":v.hero;hb.classList.toggle("hero-has-card",!!v.card);$("#hero").classList.toggle("compact",!v.card);$("#hero").classList.toggle("bare",bare);
   const m=$("#main");m.innerHTML=v.body;
   m.classList.remove("enter");void m.offsetWidth;m.classList.add("enter");
   document.querySelectorAll("#navlinks a,#mobileMenu a").forEach(a=>a.getAttribute("href")==="#"+active&&!a.classList.contains("sub-parent")?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
