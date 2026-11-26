@@ -799,7 +799,7 @@ const SITE = {
     { label: "TrustNet.AI Lab", icon: "lab", url: "https://atariq-hash.github.io/TrustNet.AI/" }
   ],
   subjects: ["Computer Science", "Artificial Intelligence"],
-  topics: ["Trustworthy AI", "Federated learning", "Quantum machine learning", "Edge AI", "Physical AI", "Cloud computing", "Data structures"],
+  topics: ["Trustworthy AI", "Explainable AI", "Federated learning", "Causal AI", "Physical AI", "Quantum machine learning", "Edge AI", "Internet of Things", "Cloud computing", "LLMs and agentic AI", "Digital twins", "Game theory and optimisation", "Data structures"],
   bio: [
     "Asadullah Tariq is an Assistant Professor of AI and Robotics at New Uzbekistan University and a Postdoctoral Researcher at the College of Technological Innovation, Zayed University. He leads the TrustNet.AI Lab, which builds trustworthy, privacy-preserving AI for connected systems.",
     "He completed his PhD in Computing and Informatics at the United Arab Emirates University (2022 to 2025) with a thesis on a trustworthy federated learning framework for secure, efficient and quality-aware distributed AI, and was a visiting researcher at Queen Mary University of London.",
@@ -1349,7 +1349,7 @@ function courseCard(c){
 /* ---------- views ---------- */
 const SUBDESC={topics:"Themes behind my work",projects:"Current and proposed projects",publications:"Papers, ranked and searchable",group:"TrustNet.AI Lab"};
 const SUBICON=['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.8 2.8M16.2 16.2 19 19M5 19l2.8-2.8M16.2 7.8 19 5"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v13H3zM8 7V4h8v3"/><path d="M3 12h18"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h7M9 17h5"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>'];
-const NAV=[["about","About"],["teaching","Teaching"],["topics","Research",[["topics","Research topics"],["projects","Research projects"],["publications","Publications"],["group","Research group"]]],["awards","Awards"],["service","Service"],["education","Education"]];
+const NAV=[["about","About"],["teaching","Teaching"],["publications","Publications"],["projects","Projects"],["awards","Awards"],["service","Service"],["education","Education"]];
 const NAVFLAT=NAV.flatMap(n=>n[2]?n[2]:[n]);
 
 const V={
@@ -1501,27 +1501,12 @@ awards(){
   return {hero,body};
 },
 
-topics(){
-  const TI={"shield": "<path d=\"M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z\"/><path d=\"m9 12 2 2 4-4\"/>", "net": "<circle cx=\"12\" cy=\"5\" r=\"2.5\"/><circle cx=\"5\" cy=\"18\" r=\"2.5\"/><circle cx=\"19\" cy=\"18\" r=\"2.5\"/><path d=\"M12 7.5v4M10.5 13 6.5 16M13.5 13l4 3M12 11.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2\"/>", "cloud": "<path d=\"M7 18a4.5 4.5 0 0 1-.7-9 6 6 0 0 1 11.5 1.6A4 4 0 0 1 17 18z\"/><path d=\"M9 21v-3M15 21v-3\"/>", "atom": "<circle cx=\"12\" cy=\"12\" r=\"1.5\"/><ellipse cx=\"12\" cy=\"12\" rx=\"10\" ry=\"4\"/><ellipse cx=\"12\" cy=\"12\" rx=\"10\" ry=\"4\" transform=\"rotate(60 12 12)\"/><ellipse cx=\"12\" cy=\"12\" rx=\"10\" ry=\"4\" transform=\"rotate(120 12 12)\"/>", "spark": "<path d=\"M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z\"/><path d=\"M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z\"/>", "causal": "<circle cx=\"5\" cy=\"6\" r=\"2.5\"/><circle cx=\"19\" cy=\"6\" r=\"2.5\"/><circle cx=\"12\" cy=\"18\" r=\"2.5\"/><path d=\"M7.5 6h9M6.5 8.2l4.2 7.6M17.5 8.2l-4.2 7.6\"/><path d=\"m14.5 4.5 2 1.5-2 1.5\"/>", "robot": "<rect x=\"5\" y=\"8\" width=\"14\" height=\"10\" rx=\"3\"/><path d=\"M12 4v4M9 13h.01M15 13h.01M2 13h3M19 13h3M9 18v3M15 18v3\"/>", "game": "<path d=\"M6 11h4M8 9v4M15 12h.01M18 10h.01\"/><path d=\"M17.3 5H6.7A4 4 0 0 0 2.8 8.3L2 13a3 3 0 0 0 5.5 2l1-1.5h7l1 1.5A3 3 0 0 0 22 13l-.8-4.7A4 4 0 0 0 17.3 5z\"/>"};
-  const pc=a=>SITE.publications.filter(p=>a.keys.some(k=>(p.title+" "+p.venue).toLowerCase().includes(k))).length;
-  const hero=`<div class="hero-text"><h1>Research topics</h1><p class="sub">The questions behind my work: making AI trustworthy, private and efficient when it learns and acts across devices, networks and the physical world.</p>
-    <div class="counts"><div><b>${SITE.areas.length}</b>research topics</div><div><b>${SITE.projects.length}</b>projects</div><div><b>${SITE.publications.length}</b>publications</div></div></div>`;
-  const body=`<div class="wrap"><section class="section">
-    <div class="topics">${SITE.areas.map((a,i)=>`<article class="topic">
-      <span class="topic-num">${String(i+1).padStart(2,"0")}</span>
-      <span class="topic-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${TI[a.icon]||TI.spark}</svg></span>
-      <h3>${esc(a.title)}</h3><p>${esc(a.desc)}</p>
-      <a class="topic-link" href="#publications" data-topic="${esc(a.keys[0].trim())}"><span>${pc(a)} related ${pc(a)===1?"paper":"papers"}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </article>`).join("")}</div>
-    <div class="topics-cta"><a class="btn primary" href="#projects">See research projects</a><a class="btn" href="#group">Visit the research group</a></div>
-  </section></div>`;
-  return {hero,body,after(){document.querySelectorAll("[data-topic]").forEach(a=>a.addEventListener("click",()=>{window.__pubQ=a.dataset.topic}))}};
-},
-
 projects(){
-  const hero=`<div class="hero-text"><h1>Research projects</h1><p class="sub">Funded, ongoing and proposed projects, from trustworthy healthcare AI to generative AI for Uzbekistan’s net-zero future.</p>
+  const hero=`<div class="hero-text"><h1>Projects</h1><p class="sub">My research group and the projects we are working on, from trustworthy healthcare AI to generative AI for Uzbekistan’s net-zero future.</p>
     <div class="counts"><div><b>${SITE.projects.length}</b>projects</div><div><b>${SITE.projects.filter(p=>p.status==="Ongoing").length}</b>ongoing</div><div><b>${SITE.projects.filter(p=>p.status==="Proposed").length}</b>proposed</div></div></div>`;
-  const body=`<div class="wrap"><section class="section"><div class="pj-list">${SITE.projects.map(p=>`<article class="pj${p.image?"":" noimg"}">
+  const g=V.group().body, lab=g.slice(g.indexOf('<div class="labcard">'),g.lastIndexOf('</section>'));
+  const groupSec=`<section class="section"><div class="shead"><h2>Research group</h2><p>TrustNet.AI Lab, which I lead.</p></div>${lab}</section>`;
+  const body=`<div class="wrap">${groupSec}<section class="section"><div class="shead"><h2>Research projects</h2><p>Funded, ongoing and proposed.</p></div><div class="pj-list">${SITE.projects.map(p=>`<article class="pj${p.image?"":" noimg"}">
       <div class="pj-media">${p.image?`<img src="${ASSETS[p.image]}" alt="" loading="lazy"${p.imgPos?` style="object-position:${esc(p.imgPos)}"`:""}>`:`<span class="pj-ph" aria-hidden="true"></span>`}</div>
       <div class="pj-body">
         <div class="pj-top"><span class="pj-status s-${p.status.toLowerCase()}">${esc(p.status)}</span>${p.host?`<span class="pj-host">${esc(p.host)}</span>`:""}</div>
@@ -1619,6 +1604,7 @@ function route(){
   let v,active=h;
   if(h.startsWith("course-")){v=V.course(h.slice(7));active="teaching"}
   else if(h.startsWith("materials-")){v=V.materials(h.slice(10));active="teaching"}
+  else if(h==="topics"||h==="group"){v=V.projects();active="projects"}
   else if(V[h]&&h!=="course"){v=V[h]()}
   else{v=V.about();active="about"}
   const hb=$("#heroBody");hb.innerHTML=v.hero;hb.classList.toggle("hero-has-card",!!v.card);
