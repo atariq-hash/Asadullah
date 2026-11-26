@@ -346,6 +346,22 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .m-rank.r-top small{color:rgba(255,255,255,.75)}
 .m-rank.r-a{background:var(--accent-soft);color:var(--accent);border-color:transparent}
 .m-rank.r-a small{color:var(--accent);opacity:.75}
+/* AI-style "Top papers" button + ranked list */
+.tools .chip.ai{position:relative;overflow:hidden;isolation:isolate;gap:.45rem;color:#fff;border:0;background:linear-gradient(135deg,#00C2FF,#5B4BFF 60%,#3A24B8);box-shadow:0 8px 20px -8px rgba(65,38,224,.7),0 0 0 3px rgba(91,75,255,.15);padding:.45rem 1rem}
+.tools .chip.ai svg{width:16px;height:16px}
+.tools .chip.ai .n{background:rgba(255,255,255,.22);color:#fff}
+.tools .chip.ai::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-100%)}
+.tools .chip.ai:hover::after{animation:aishine 1s ease}
+@keyframes aishine{to{transform:translateX(100%)}}
+.tools .chip.ai[aria-pressed="true"]{background:linear-gradient(135deg,#00C2FF,#5B4BFF 60%,#3A24B8);color:#fff;box-shadow:0 10px 24px -8px rgba(65,38,224,.85),0 0 0 3px rgba(0,194,255,.45)}
+.topgrp{margin-bottom:2rem}
+.toph{display:flex;align-items:center;gap:.6rem;margin:0 0 .9rem;font-size:1.1rem}
+.toph small{display:inline-grid;place-items:center;min-width:1.6rem;height:1.6rem;padding:0 .4rem;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:.8rem}
+.toplist{counter-reset:none}
+.toprow{display:grid;grid-template-columns:44px 1fr;gap:.9rem;align-items:start}
+.toprow .rank{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(140deg,#00C2FF,#5B4BFF);color:#fff;font-weight:800;font-size:1.05rem;margin-top:.6rem}
+.toprow>div.pc{min-width:0}
+@media (max-width:600px){.toprow{grid-template-columns:34px 1fr;gap:.6rem}.toprow .rank{width:34px;height:34px;border-radius:10px;font-size:.9rem}}
 /* service v2 */
 .lead{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1rem}
 .lead-card{display:grid;grid-template-columns:74px 1fr;gap:1rem;padding:1.2rem 1.3rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);position:relative;overflow:hidden}
@@ -1205,6 +1221,18 @@ function metrics(b){
   if(fl)h+=`<span class="m-rank r-top" title="Flagship conference">Flagship</span>`;
   return h||`<span class="tag badge">${esc(b)}</span>`;
 }
+function topPapers(grouped){
+  const P=SITE.publications, first=p=>/^(A\. Tariq|Asadullah Tariq)\b/.test(p.authors);
+  const trans=p=>p.type==="journal"&&/^IEEE (Transactions|Internet of Things Journal)/.test(p.venue);
+  const byYear=(a,b)=>b.year-a.year;
+  const g=[
+    {label:"Flagship survey: IEEE Communications Surveys and Tutorials",items:P.filter(p=>/Communications Surveys/.test(p.venue))},
+    {label:"First-author IEEE Transactions and IoT Journal",items:P.filter(p=>trans(p)&&first(p)).sort(byYear)},
+    {label:"IEEE Transactions and IoT Journal",items:P.filter(p=>trans(p)&&!first(p)).sort(byYear)},
+    {label:"IEEE INFOCOM, ICC and GLOBECOM",items:P.filter(p=>p.type==="conference"&&/INFOCOM|IEEE ICC \d|GLOBECOM/.test(p.venue)).sort((a,b)=>{const o=v=>/INFOCOM/.test(v)?0:/ICC/.test(v)?1:2;return o(a.venue)-o(b.venue)||first(b)-first(a)||byYear(a,b)})}
+  ];
+  return grouped?g:g.flatMap(x=>x.items);
+}
 const TYPE={journal:"Journal",conference:"Conference",book:"Book chapter"};
 function pubCard(p){
   const lg=pubLogo(p);
@@ -1345,6 +1373,7 @@ publications(){
   const body=`<div class="wrap"><section class="section">
     <div class="tools">
       <ul class="chips" role="group" aria-label="Filter by type">
+        <li><button class="chip ai" type="button" data-k="top" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z"/><path d="M19 14l.9 2.6 2.6.9-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9z" opacity=".8"/></svg>Top papers <span class="n">${topPapers().length}</span></button></li>
         <li><button class="chip" type="button" data-k="all" aria-pressed="true">All <span class="n">${P.length}</span></button></li>
         <li><button class="chip" type="button" data-k="journal" aria-pressed="false">Journals <span class="n">${cnt("journal")}</span></button></li>
         <li><button class="chip" type="button" data-k="conference" aria-pressed="false">Conferences <span class="n">${cnt("conference")}</span></button></li>
@@ -1359,6 +1388,14 @@ publications(){
     let k="all";const q=$("#q");
     const draw=()=>{
       const s=q.value.toLowerCase().trim();
+      if(k==="top"){
+        $("#yearJump").innerHTML="";
+        const groups=topPapers(true).map(g=>({...g,items:g.items.filter(p=>!s||[p.title,p.authors,p.venue,p.badge||""].join(" ").toLowerCase().includes(s))})).filter(g=>g.items.length);
+        let n=0;
+        $("#pubList").innerHTML=groups.length?groups.map(g=>`<section class="topgrp"><h3 class="toph"><span>${esc(g.label)}</span><small>${g.items.length}</small></h3><ol class="pubs toplist">${g.items.map(p=>`<li class="toprow"><span class="rank">${++n}</span>${pubCard(p).replace(/^<li/,"<div").replace(/<\/li>\s*$/,"</div>")}</li>`).join("")}</ol></section>`).join(""):`<div class="empty">No top papers match “${esc(q.value)}”.</div>`;
+        $("#pubList").querySelectorAll("[data-cite]").forEach(b=>b.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(b.dataset.cite);b.textContent="Copied";}catch(e){b.textContent="Copy failed"}setTimeout(()=>b.textContent="Copy citation",1600)}));
+        return;
+      }
       const items=P.filter(p=>k==="all"||(k==="award"?!!p.award:p.type===k)).filter(p=>!s||[p.title,p.authors,p.venue,p.badge||""].join(" ").toLowerCase().includes(s)).sort((a,b)=>b.year-a.year||(a.status==="accepted")-(b.status==="accepted"));
       const ys=[...new Set(items.map(p=>p.year))];
       $("#yearJump").innerHTML=ys.map(y=>`<a href="#publications" data-y="${y}">${y}</a>`).join("");
