@@ -363,6 +363,9 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .toprow>div.pc{min-width:0}
 @media (max-width:600px){.toprow{grid-template-columns:34px 1fr;gap:.6rem}.toprow .rank{width:34px;height:34px;border-radius:10px;font-size:.9rem}}
 /* service v2 */
+.m-if.hot{color:#fff;border-color:transparent;background:linear-gradient(135deg,#FF5A5F,#D7263D 60%,#A3122A);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 14px -4px rgba(215,38,61,.75);font-size:.95rem;font-weight:800;padding:.34rem .7rem}
+.m-if.hot small{color:rgba(255,255,255,.85)}
+.m-if.hot svg{width:14px;height:14px;align-self:center;margin-right:-.1rem}
 .lead{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1rem}
 .lead-card{display:grid;grid-template-columns:74px 1fr;gap:1rem;padding:1.2rem 1.3rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);position:relative;overflow:hidden}
 .lead-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#00C2FF,#5B4BFF)}
@@ -1216,7 +1219,7 @@ function metrics(b){
   const q=(b.match(/Q[1-4]/)||[])[0], f=(b.match(/IF\s*([\d.]+)/)||[])[1], r=(b.match(/Rank\s*(A\*|A|B|C)/)||[])[1], fl=/Flagship/.test(b);
   let h="";
   if(q)h+=`<span class="m-q m-${q.toLowerCase()}" title="Journal quartile">${q}</span>`;
-  if(f)h+=`<span class="m-if" title="Impact factor"><small>IF</small>${esc(f)}</span>`;
+  if(f)h+=`<span class="m-if${parseFloat(f)>=20?" hot":""}" title="Impact factor">${parseFloat(f)>=20?'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2s1 3.2-1.2 6.1C10.6 10.3 9 11.6 9 14a3 3 0 0 0 6 0c0-1.3-.6-2.3-.6-2.3s2.6 1.2 2.6 4.3A5 5 0 0 1 12 21a6 6 0 0 1-6-6c0-4.2 3.3-6.4 5-8.5C12.6 4.6 13.5 2 13.5 2z"/></svg>':""}<small>IF</small>${esc(f)}</span>`;
   if(r)h+=`<span class="m-rank ${r==="A*"?"r-top":r==="A"?"r-a":"r-b"}" title="CORE conference rank"><small>Rank</small>${esc(r)}</span>`;
   if(fl)h+=`<span class="m-rank r-top" title="Flagship conference">Flagship</span>`;
   return h||`<span class="tag badge">${esc(b)}</span>`;
