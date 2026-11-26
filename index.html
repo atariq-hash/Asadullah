@@ -478,6 +478,9 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 }
 @media (prefers-reduced-motion:reduce){.topic:hover,.pj:hover .pj-media img{transform:none}}
 /* service v2 */
+.feat-h{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#FF5A5F,#D7263D 60%,#A3122A);color:#fff;box-shadow:0 10px 22px -10px rgba(215,38,61,.8)}
+.feat-h svg{width:26px;height:26px}
+.ygroup.feat .pc{border-left:4px solid #D7263D;box-shadow:0 16px 40px -24px rgba(215,38,61,.55)}
 .tools .chip .n,.toph small{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;min-width:1.7rem;padding:0;border-radius:50%;font-size:.72rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .tools button.chip:not(.ai){position:relative;overflow:hidden;isolation:isolate;transition:color .2s,box-shadow .2s,border-color .2s}
 .tools button.chip:not(.ai)::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,#00C2FF,#5B4BFF 60%,#3A24B8);opacity:0;transition:opacity .2s}
@@ -1485,7 +1488,8 @@ publications(){
       $("#yearJump").innerHTML=ys.map(y=>`<a href="#publications" data-y="${y}">${y}</a>`).join("");
       $("#yearJump").querySelectorAll("a").forEach(a=>a.addEventListener("click",ev=>{ev.preventDefault();document.getElementById("y"+a.dataset.y).scrollIntoView({behavior:"smooth",block:"start"})}));
       if(!items.length){$("#pubList").innerHTML=`<div class="empty">No publications match “${esc(q.value)}”. Try another word or choose All.</div>`;return}
-      $("#pubList").innerHTML=ys.map(y=>{const g=items.filter(p=>p.year===y);return `<div class="ygroup" id="y${y}"><div class="yl"><h3>${y}</h3><span>${g.length} ${g.length===1?"paper":"papers"}</span></div><ul class="pubs">${g.map(pubCard).join("")}</ul></div>`}).join("");
+      const feat=(k==="all"||k==="journal")?items.filter(p=>/Communications Surveys/.test(p.venue)):[];
+      $("#pubList").innerHTML=(feat.length?`<div class="ygroup feat"><div class="yl"><h3 class="feat-h"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 16.9 6.1 20l1.2-6.5L2.5 8.9 9.1 8z"/></svg></h3><span>Featured</span></div><ul class="pubs">${feat.map(pubCard).join("")}</ul></div>`:"")+ys.map(y=>{const g=items.filter(p=>p.year===y);return `<div class="ygroup" id="y${y}"><div class="yl"><h3>${y}</h3><span>${g.length} ${g.length===1?"paper":"papers"}</span></div><ul class="pubs">${g.map(pubCard).join("")}</ul></div>`}).join("");
       $("#pubList").querySelectorAll("[data-cite]").forEach(b=>b.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(b.dataset.cite);b.textContent="Copied";}catch(e){b.textContent="Copy failed"}setTimeout(()=>b.textContent="Copy citation",1600)}));
     };
     document.querySelectorAll(".tools button.chip").forEach(b=>b.addEventListener("click",()=>{k=b.dataset.k;document.querySelectorAll(".tools button.chip").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));draw()}));
