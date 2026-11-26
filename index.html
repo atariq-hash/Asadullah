@@ -189,6 +189,9 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mq-logo .logo-tile.keep{background:#fff;border-radius:14px;padding:.45rem .7rem}}
 @media (prefers-reduced-motion:reduce){.mq-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}.mq-item[aria-hidden="true"]{display:none}.marquee{-webkit-mask-image:none;mask-image:none}}
 @media (max-width:600px){.mq-item{width:230px;padding:0 1.2rem}.mq-logo{height:64px}}
+.mq-years{font-family:var(--mono);font-size:.82rem;font-weight:500;color:var(--accent);margin-top:-.45rem}
+.uni .meta .yrs{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-top:.15rem}
+.school .sch-yrs{display:block;margin-top:.3rem;font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--muted)}
 /* materials */
 .mat-cta{display:flex;align-items:center;gap:1rem;margin:.5rem 0 1rem;padding:1.1rem 1.3rem;border-radius:var(--r-lg);background:var(--hero);color:#fff;text-decoration:none;box-shadow:0 18px 40px -24px rgba(65,38,224,.8);max-width:68ch}
 .mat-cta .ico{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.16);flex:none}
@@ -444,10 +447,10 @@ const SITE = {
   ],
 
   universities: [
-    { id: "nuu",  name: "New Uzbekistan University", school: "School of Computing", short: "NUU", place: "Tashkent, Uzbekistan", url: "https://newuu.uz", current: true },
-    { id: "cud",  main: "cud_main", name: "Canadian University Dubai", school: "School of Engineering, Applied Science and Technology (SEAST)", short: "CUD", place: "Dubai, UAE", url: "https://www.cud.ac.ae" },
-    { id: "uaeu", main: "uaeu_main", name: "United Arab Emirates University", school: "College of Computing and AI", short: "UAEU", place: "Al Ain, UAE", url: "https://www.uaeu.ac.ae" },
-    { id: "superior", main: "sup_main", name: "Superior University", short: "Superior", place: "Lahore, Pakistan", url: "https://superior.edu.pk" }
+    { id: "nuu",  years: "2026 to present", name: "New Uzbekistan University", school: "School of Computing", short: "NUU", place: "Tashkent, Uzbekistan", url: "https://newuu.uz", current: true },
+    { id: "cud",  years: "2025 to 2026", main: "cud_main", name: "Canadian University Dubai", school: "School of Engineering, Applied Science and Technology (SEAST)", short: "CUD", place: "Dubai, UAE", url: "https://www.cud.ac.ae" },
+    { id: "uaeu", years: "2023 to 2025", main: "uaeu_main", name: "United Arab Emirates University", school: "College of Computing and AI", short: "UAEU", place: "Al Ain, UAE", url: "https://www.uaeu.ac.ae" },
+    { id: "superior", years: "2018 to 2022", main: "sup_main", name: "Superior University", short: "Superior", place: "Lahore, Pakistan", url: "https://superior.edu.pk" }
   ],
 
   /* Course text below is a starting draft. Adjust outcomes, terms and details to match how you taught each course. */
@@ -672,14 +675,14 @@ const cIds=c=>c.unis||[c.uni];
 const cUnis=c=>cIds(c).map(uni);
 const profIcon=k=>k==="lab"?`<span class="plogo"><svg viewBox="-16 -34 200 168" aria-hidden="true"><use href="#tnlogo" width="535" height="100"/></svg></span>`:(ASSETS[k]?`<span class="plogo"><img src="${ASSETS[k]}" alt=""></span>`:"");
 function uniMarquee(){
-  const item=(u,hidden)=>`<a class="mq-item" href="#teaching"${hidden?' aria-hidden="true" tabindex="-1"':""}><span class="mq-logo">${logo(u.main||u.id,hidden?"":u.name)}</span><span class="mq-name">${esc(u.name)}</span>${u.current?'<span class="pill">Active</span>':`<span class="mq-place">${esc(u.place)}</span>`}</a>`;
+  const item=(u,hidden)=>`<a class="mq-item" href="#teaching"${hidden?' aria-hidden="true" tabindex="-1"':""}><span class="mq-logo">${logo(u.main||u.id,hidden?"":u.name)}</span><span class="mq-name">${esc(u.name)}</span>${u.years?`<span class="mq-years">${esc(u.years)}</span>`:""}${u.current?'<span class="pill">Active</span>':`<span class="mq-place">${esc(u.place)}</span>`}</a>`;
   const reps=Math.max(2,Math.ceil(8/SITE.universities.length));
   const half=i=>Array.from({length:reps},(_,r)=>SITE.universities.map(u=>item(u,i>0||r>0)).join("")).join("");
   return `<div class="marquee" role="region" aria-label="Universities where I teach"><div class="mq-track">${half(0)}${half(1)}</div></div>`;
 }
 function uniCard(u,btn){
   const n=SITE.courses.filter(c=>cIds(c).includes(u.id)).length;
-  const inner=`${u.current?'<span class="pill">Active</span>':""}${logo(u.main||u.id,u.name)}<span class="meta"><strong>${esc(u.name)}</strong>${u.school?`<span class="sch">${esc(u.school)}</span>`:""}<span>${esc(u.place)}, ${n} course${n===1?"":"s"}</span></span>`;
+  const inner=`${u.current?'<span class="pill">Active</span>':""}${logo(u.main||u.id,u.name)}<span class="meta"><strong>${esc(u.name)}</strong>${u.school?`<span class="sch">${esc(u.school)}</span>`:""}<span>${esc(u.place)}, ${n} course${n===1?"":"s"}</span>${u.years?`<span class="yrs">${esc(u.years)}</span>`:""}</span>`;
   return btn?`<button type="button" class="uni" data-u="${u.id}" aria-pressed="false">${inner}</button>`:`<a class="uni" href="#teaching">${inner}</a>`;
 }
 function courseCard(c){
@@ -785,7 +788,7 @@ course(id){
         <li><span>${I.clock}</span><span class="lab">Terms taught</span><span class="val">${c.terms?esc(c.terms):'<span class="soon">Updating soon</span>'}</span></li>
         <li class="stack"><span>${I.tag}</span><span class="lab">Topics</span><div class="val"><ul class="chips">${c.topics.map(t=>`<li class="chip">${esc(t)}</li>`).join("")}</ul></div></li>
       </ul>
-      <div class="school"><h3>Associated school${us.length>1?"s":""}</h3>${us.map(x=>`<div class="sch-item"><a href="${esc(x.url)}" target="_blank" rel="noopener">${logo(x.id,x.name)}</a><p>${esc(x.name)}${x.school?`<small>${esc(x.school)}</small>`:""}</p></div>`).join("")}</div>
+      <div class="school"><h3>Associated school${us.length>1?"s":""}</h3>${us.map(x=>`<div class="sch-item"><a href="${esc(x.url)}" target="_blank" rel="noopener">${logo(x.id,x.name)}</a><p>${esc(x.name)}${x.school?`<small>${esc(x.school)}</small>`:""}${x.years?`<span class="sch-yrs">${esc(x.years)}</span>`:""}</p></div>`).join("")}</div>
     </aside>
   </div>
   <div class="wrap"><section class="section"><div class="shead"><h2>Other courses I teach</h2><a class="btn" href="#teaching">All courses</a></div><div class="grid">${others.map(courseCard).join("")}</div></section></div>`;
