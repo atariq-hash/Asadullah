@@ -363,6 +363,15 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .toprow>div.pc{min-width:0}
 @media (max-width:600px){.toprow{grid-template-columns:34px 1fr;gap:.6rem}.toprow .rank{width:34px;height:34px;border-radius:10px;font-size:.9rem}}
 /* service v2 */
+.tools button.chip:not(.ai){position:relative;overflow:hidden;isolation:isolate;transition:color .2s,box-shadow .2s,border-color .2s}
+.tools button.chip:not(.ai)::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(135deg,#00C2FF,#5B4BFF 60%,#3A24B8);opacity:0;transition:opacity .2s}
+.tools button.chip:not(.ai)::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-100%)}
+.tools button.chip:not(.ai):hover,.tools button.chip:not(.ai)[aria-pressed="true"]{color:#fff;border-color:transparent;box-shadow:0 8px 20px -8px rgba(65,38,224,.7),0 0 0 3px rgba(91,75,255,.15)}
+.tools button.chip:not(.ai):hover::before,.tools button.chip:not(.ai)[aria-pressed="true"]::before{opacity:1}
+.tools button.chip:not(.ai):hover::after{animation:aishine 1s ease}
+.tools button.chip:not(.ai):hover .n,.tools button.chip:not(.ai)[aria-pressed="true"] .n{background:rgba(255,255,255,.22);color:#fff}
+.tools button.chip:not(.ai)[aria-pressed="true"]{background:transparent}
+@media (prefers-reduced-motion:reduce){.tools button.chip:hover::after{animation:none}}
 .m-if.hot{color:#fff;border-color:transparent;background:linear-gradient(135deg,#FF5A5F,#D7263D 60%,#A3122A);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 14px -4px rgba(215,38,61,.75);font-size:.95rem;font-weight:800;padding:.34rem .7rem}
 .m-if.hot small{color:rgba(255,255,255,.85)}
 .m-if.hot svg{width:14px;height:14px;align-self:center;margin-right:-.1rem}
