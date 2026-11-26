@@ -190,8 +190,9 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 @media (prefers-reduced-motion:reduce){.mq-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}.mq-item[aria-hidden="true"]{display:none}.marquee{-webkit-mask-image:none;mask-image:none}}
 @media (max-width:600px){.mq-item{width:230px;padding:0 1.2rem}.mq-logo{height:64px}}
 .mq-years{font-family:var(--mono);font-size:.82rem;font-weight:500;color:var(--accent);margin-top:-.45rem}
-.uni .meta .yrs{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-top:.15rem}
-.school .sch-yrs{display:block;margin-top:.3rem;font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--muted)}
+.uni .meta .yrs{align-self:flex-start;display:inline-flex;align-items:center;gap:.4rem;margin-top:.55rem;padding:.28rem .8rem;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-family:var(--sans);font-size:.88rem;font-weight:600;letter-spacing:.01em;font-variant-numeric:tabular-nums lining-nums}
+.uni .meta .yrs::before{content:"";width:7px;height:7px;border-radius:50%;background:linear-gradient(140deg,#00C2FF,#5B4BFF)}
+.school .sch-yrs{display:inline-block;margin-top:.5rem;padding:.22rem .75rem;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-family:var(--sans);font-size:.84rem;font-weight:600;font-variant-numeric:tabular-nums lining-nums}
 /* university cards with campus photos */
 .wrap .uni{padding:0;gap:0;overflow:hidden;align-items:stretch}
 .wrap .uni .uni-cover{display:block;aspect-ratio:16/8;background:var(--hero);position:relative;overflow:hidden}
