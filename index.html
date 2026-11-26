@@ -478,6 +478,16 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 }
 @media (prefers-reduced-motion:reduce){.topic:hover,.pj:hover .pj-media img{transform:none}}
 /* service v2 */
+/* compact header on every page except About and course pages */
+.hero.compact .hero-body{padding:.6rem 1.5rem 2.2rem}
+.hero.compact .hero-text{max-width:none}
+.hero.compact h1,.hero.compact h1.course,.hero.compact h1.fit{font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.1;letter-spacing:-.03em}
+.hero.compact .sub{font-size:1rem;margin:.55rem 0 0;max-width:70ch}
+.hero.compact .crumbs{margin-bottom:.5rem}
+.hero.compact .counts{margin-top:1rem;gap:1.6rem}
+.hero.compact .counts b{font-size:1.5rem}
+.hero.compact .counts div{font-size:.82rem}
+.hero.compact .actions{margin-top:1rem}
 .hero-text.wide{max-width:none}
 .hero h1.fit{font-size:clamp(1.9rem,4.4vw,3.6rem);line-height:1.08;text-wrap:balance}
 .rows .chips.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:.5rem}
@@ -1617,7 +1627,7 @@ function route(){
   else if(h==="topics"||h==="group"){v=V.projects();active="projects"}
   else if(V[h]&&h!=="course"){v=V[h]()}
   else{v=V.about();active="about"}
-  const hb=$("#heroBody");hb.innerHTML=v.hero;hb.classList.toggle("hero-has-card",!!v.card);
+  const hb=$("#heroBody");hb.innerHTML=v.hero;hb.classList.toggle("hero-has-card",!!v.card);$("#hero").classList.toggle("compact",!v.card);
   const m=$("#main");m.innerHTML=v.body;
   m.classList.remove("enter");void m.offsetWidth;m.classList.add("enter");
   document.querySelectorAll("#navlinks a,#mobileMenu a").forEach(a=>a.getAttribute("href")==="#"+active&&!a.classList.contains("sub-parent")?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
