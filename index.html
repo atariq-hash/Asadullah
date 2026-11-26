@@ -106,6 +106,10 @@ h2{font-size:clamp(1.6rem,3vw,2.1rem);margin:0 0 1.1rem;line-height:1.15}
   .sidecard,.sidecard.with-photo{margin-top:-1.5rem;order:-1}
 }
 .photo{width:190px;height:190px;border-radius:50%;margin:-95px auto .5rem;display:block;object-fit:cover;border:6px solid var(--surface);box-shadow:0 0 0 1px var(--line),var(--shadow);background:var(--accent-soft)}
+.photo-wrap{position:relative;width:190px;margin:0 auto}
+.photo-badge{position:absolute;right:-26px;bottom:2px;width:78px;height:56px;border-radius:14px;overflow:hidden;background:#0D1D41;border:4px solid var(--surface);box-shadow:0 8px 20px -8px rgba(13,29,65,.6);display:block;transition:transform .2s}
+.photo-badge:hover{transform:scale(1.06)}
+.photo-badge img{width:100%;height:100%;object-fit:contain;display:block}
 @media (max-width:980px){.sidecard.with-photo{margin-top:4.5rem}}
 .rows{list-style:none;margin:0;padding:.4rem 1.5rem 1rem}
 .rows>li{display:grid;grid-template-columns:24px 1fr 1.2fr;gap:.75rem;align-items:start;padding:.9rem 0;border-top:1px solid var(--line)}
@@ -928,7 +932,7 @@ about(){
 
     </div>
     <aside class="sidecard with-photo" aria-label="Profile">
-      <img class="photo" src="${ASSETS.photo}" alt="Portrait of ${esc(SITE.name)}">
+      <div class="photo-wrap"><img class="photo" src="${ASSETS.photo}" alt="Portrait of ${esc(SITE.name)}"><a class="photo-badge" href="#teaching" title="New Uzbekistan University"><img src="${ASSETS.nuu_card}" alt="New Uzbekistan University"></a></div>
       <ul class="rows">
         <li><span>${I.cap}</span><span class="lab">Subjects</span><span class="val">${SITE.subjects.map(esc).join(", ")}</span></li>
         <li class="stack"><span>${I.tag}</span><span class="lab">Course and research topics</span><div class="val"><ul class="chips">${SITE.topics.map(t=>`<li class="chip">${esc(t)}</li>`).join("")}</ul></div></li>
