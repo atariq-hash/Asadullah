@@ -345,7 +345,9 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .ccard .subj svg{width:16px;height:16px;color:var(--accent)}
 .ccard .mode{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--ink)}
 .ccard .mode svg{width:15px;height:15px}
-.ccard h3{margin:0;font-size:1.35rem;line-height:1.2;color:var(--accent);font-weight:600}
+.ccard h3{margin:0;font-size:1.35rem;line-height:1.2;color:#1E0B7A;font-weight:700}
+:root[data-theme="dark"] .ccard h3{color:#E4DEFF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ccard h3{color:#E4DEFF}}
 .ccard p{margin:0;color:var(--text);font-size:.96rem}
 .ccard .foot .logo-tile img{height:28px;max-width:120px}
 .ccard .foot{margin-top:auto;padding-top:.9rem;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:.8rem;font-size:.85rem;color:var(--muted)}
