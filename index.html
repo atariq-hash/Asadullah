@@ -381,6 +381,8 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .aw-for{margin-top:.6rem!important;padding-top:.7rem;border-top:1px dashed var(--line);color:var(--text)!important;font-size:.88rem!important;line-height:1.45}
 .aw-for span{display:block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:.15rem}
 @media (prefers-reduced-motion:reduce){.aw-card:hover{transform:none}}
+.mem-mq{cursor:default}
+.mem-mq .mq-logo .logo-tile img{max-width:200px;max-height:72px}
 /* service v2 */
 .tools .chip .n,.toph small{display:inline-grid;place-items:center;width:1.7rem;height:1.7rem;min-width:1.7rem;padding:0;border-radius:50%;font-size:.72rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .tools button.chip:not(.ai){position:relative;overflow:hidden;isolation:isolate;transition:color .2s,box-shadow .2s,border-color .2s}
@@ -1238,6 +1240,13 @@ function awardCard(a){
     ${pp?`<p class="aw-for"><span>For the paper</span>${esc(pp.title)}</p>`:""}
   </article>`;
 }
+function memberMarquee(){
+  const M=SITE.memberships;
+  const item=(m,hid)=>`<div class="mq-item mem-mq"${hid?' aria-hidden="true"':""}><span class="mq-logo"><span class="logo-tile keep"><img src="${ASSETS[m.logo]}" alt="${hid?"":esc(m.org)}"></span></span><span class="mq-name">${esc(m.org)}</span><span class="mq-place">${m.since?`Since ${esc(m.since)}`:esc(m.label||"Member")}</span></div>`;
+  const reps=Math.max(2,Math.ceil(10/M.length));
+  const half=i=>Array.from({length:reps},(_,r)=>M.map(m=>item(m,i>0||r>0)).join("")).join("");
+  return `<div class="marquee" role="region" aria-label="Professional memberships"><div class="mq-track">${half(0)}${half(1)}</div></div>`;
+}
 function uniCard(u,btn){
   const n=SITE.courses.filter(c=>cIds(c).includes(u.id)).length;
   const ph=u.photo&&ASSETS[u.photo];
@@ -1428,6 +1437,7 @@ service(){
   const hero=`<div class="hero-text"><h1>Service</h1><p class="sub">Conference leadership, peer review for leading journals, and professional memberships.</p>
     <div class="counts"><div><b>${nRev}</b>journals reviewed for</div><div><b>${SITE.reviewer.length}</b>publishers</div><div><b>${SITE.chairing.length}</b>conference roles</div><div><b>${SITE.memberships.length}</b>memberships</div></div></div>`;
   const body=`<div class="wrap">
+    <section class="section"><div class="shead"><h2>Professional memberships</h2><p>Societies and technical committees.</p></div>${memberMarquee()}</section>
     <section class="section"><div class="shead"><h2>Conference leadership</h2><p>Chairing, organising and programme committee roles.</p></div>
       <ol class="lead">${SITE.chairing.map(r=>`<li class="lead-card k-${(r.kind||"").toLowerCase()}">
         <span class="lead-year">${esc(r.year)}</span>
@@ -1440,9 +1450,6 @@ service(){
         <header><span class="rev-logo"><img src="${ASSETS[r.logo]}" alt="${esc(r.publisher)}"></span><div><h3>${esc(r.publisher)}</h3><span>${r.venues.length} ${r.venues.length===1?"journal":"journals"}</span></div></header>
         <ul class="rev-list">${r.venues.map(v=>`<li>${esc(v)}</li>`).join("")}</ul>
       </article>`).join("")}</div>
-    </section>
-    <section class="section"><div class="shead"><h2>Professional memberships</h2><p>Societies and technical committees.</p></div>
-      <div class="mem">${SITE.memberships.map(m=>`<article class="mem-card"><span class="mem-logo"><img src="${ASSETS[m.logo]}" alt=""></span><h3>${esc(m.org)}</h3><p>${esc(m.detail)}</p>${m.since?`<span class="mem-since">Since ${esc(m.since)}</span>`:`<span class="mem-since alt">${esc(m.label||"Member")}</span>`}</article>`).join("")}</div>
     </section>
     <section class="section"><div class="shead"><h2>Upcoming workshop</h2></div>${workshopBanner()}</section>
   </div>`;
