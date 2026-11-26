@@ -478,6 +478,10 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 }
 @media (prefers-reduced-motion:reduce){.topic:hover,.pj:hover .pj-media img{transform:none}}
 /* service v2 */
+.rows .chips.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:.5rem}
+.rows .chips.tgrid li{display:flex}
+.rows .chips.tgrid li:last-child:nth-child(odd){grid-column:1/-1}
+.rows .chips.tgrid .chip{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;min-height:44px;padding:.45rem .6rem;font-size:.84rem;line-height:1.25;border-radius:14px}
 .feat-h{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#FF5A5F,#D7263D 60%,#A3122A);color:#fff;box-shadow:0 10px 22px -10px rgba(215,38,61,.8)}
 .feat-h svg{width:26px;height:26px}
 .ygroup.feat .pc{border-left:4px solid #D7263D;box-shadow:0 16px 40px -24px rgba(215,38,61,.55)}
@@ -1372,7 +1376,7 @@ about(){
       <div class="photo-wrap"><img class="photo" src="${ASSETS.photo}" alt="Portrait of ${esc(SITE.name)}"><a class="photo-badge" href="#teaching" title="New Uzbekistan University"><img src="${ASSETS.nuu_card}" alt="New Uzbekistan University"></a></div>
       <ul class="rows">
         <li><span>${I.cap}</span><span class="lab">Subjects</span><span class="val">${SITE.subjects.map(esc).join(", ")}</span></li>
-        <li class="stack"><span>${I.tag}</span><span class="lab">Course and research topics</span><div class="val"><ul class="chips">${SITE.topics.map(t=>`<li class="chip">${esc(t)}</li>`).join("")}</ul></div></li>
+        <li class="stack"><span>${I.tag}</span><span class="lab">Course and research topics</span><div class="val"><ul class="chips tgrid">${SITE.topics.map(t=>`<li class="chip">${esc(t)}</li>`).join("")}</ul></div></li>
         <li class="stack"><span>${I.link}</span><span class="lab">Profiles</span><div class="val"><ul class="chips">${SITE.links.map(l=>`<li><a class="chip plink" href="${esc(l.url)}" target="_blank" rel="noopener">${profIcon(l.icon)}${esc(l.label)}</a></li>`).join("")}</ul></div></li>
       </ul>
     </aside>
