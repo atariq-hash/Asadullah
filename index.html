@@ -154,13 +154,16 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .rows>li>span>svg{width:24px;height:24px}
 .ccard .subj svg,.ccard .mode svg{width:20px;height:20px}
 .strip svg{width:22px;height:22px}
-.rows .chip,.proj .chip{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);padding:.5rem 1.05rem;font-size:.92rem;font-weight:600;box-shadow:0 6px 16px -10px var(--accent)}
+.rows .chip,.proj .chip{background:color-mix(in srgb,var(--accent) 70%,transparent);border-color:transparent;color:#fff;backdrop-filter:blur(4px);padding:.5rem 1.05rem;font-size:.92rem;font-weight:600;box-shadow:0 6px 16px -10px var(--accent)}
 .rows a.chip:hover,.proj a.chip:hover{background:color-mix(in srgb,var(--accent) 85%,#000);color:var(--accent-ink)}
 .rows .chips,.proj .chips{gap:.55rem}
 .muted{color:var(--muted)}
 .ccard .foot .logos{display:inline-flex;align-items:center;gap:.6rem}
 .school .sch-item+.sch-item{margin-top:1.4rem;padding-top:1.4rem;border-top:1px solid var(--line)}
 .chip.plink{padding:.32rem 1rem .32rem .32rem;gap:.55rem}
+.rows .chip.plink{background:transparent;border:1.5px solid color-mix(in srgb,var(--accent) 45%,var(--line));color:var(--accent);box-shadow:none;backdrop-filter:none}
+.rows a.chip.plink:hover{background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);border-color:var(--accent)}
+.rows .chip.plink .plogo{box-shadow:0 0 0 1px var(--line)}
 .plogo{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fff;flex:none;overflow:hidden}
 .plogo img{width:19px;height:19px;object-fit:contain}
 .plogo svg{width:21px;height:auto;color:#140F2E}
