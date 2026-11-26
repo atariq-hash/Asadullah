@@ -397,6 +397,27 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .submenu .si svg{width:19px;height:19px}
 .submenu b{display:block;font-weight:600;font-size:.93rem}
 .submenu small{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+.has-sub.open .caret{transform:rotate(180deg)}
+.has-sub.open>.sub-parent{background:rgba(255,255,255,.14);color:#fff}
+.navdrop{position:fixed;z-index:200;width:340px;padding:.55rem;border-radius:22px;background:var(--surface);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));box-shadow:0 30px 70px -24px rgba(20,12,70,.55),0 2px 6px rgba(20,12,70,.08);opacity:0;transform:translateY(-6px) scale(.98);transform-origin:var(--ax,50%) 0;transition:opacity .18s ease,transform .18s ease}
+.navdrop.on{opacity:1;transform:none}
+.navdrop[hidden]{display:none}
+.nd-arrow{position:absolute;top:-7px;left:calc(var(--ax,50%) - 7px);width:14px;height:14px;background:inherit;border-left:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));border-top:1px solid color-mix(in srgb,var(--accent) 18%,var(--line));transform:rotate(45deg);border-radius:3px 0 0 0}
+.nd-head{margin:.35rem .75rem .45rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.navdrop ul{list-style:none;margin:0;padding:0;display:grid;gap:.15rem}
+.navdrop a{display:flex;align-items:center;gap:.8rem;padding:.65rem .75rem;border-radius:14px;color:var(--ink);text-decoration:none;transition:background .15s}
+.navdrop a:hover,.navdrop a:focus-visible,.navdrop a[aria-current="page"]{background:var(--accent-soft)}
+.navdrop .si{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;flex:none;color:#fff;background:linear-gradient(140deg,#00C2FF,#5B4BFF 70%,#3A24B8);box-shadow:0 8px 16px -8px rgba(65,38,224,.8)}
+.navdrop .si svg{width:20px;height:20px}
+.nd-t{flex:1;min-width:0}
+.nd-t b{display:block;font-weight:600;font-size:.95rem}
+.nd-t small{display:block;font-size:.8rem;color:var(--muted)}
+.nd-go{width:16px;height:16px;color:var(--accent);opacity:0;transform:translateX(-4px);transition:opacity .15s,transform .15s}
+.navdrop a:hover .nd-go,.navdrop a:focus-visible .nd-go{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.navdrop{transition:none}}
+.mat-tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.78rem;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:.2rem .55rem;border-radius:7px}
+.mat-tag svg{width:14px;height:14px}
+.mat-cta.wide{max-width:none;margin:0}
 /* research topics */
 .topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
 @media (max-width:760px){.topics{grid-template-columns:1fr}}
@@ -1307,7 +1328,7 @@ function courseCard(c){
       <div class="mode">${I.people}${esc(c.format)}</div>
       <h3>${esc(c.title)}</h3>
       <p>${esc(c.tagline)}</p>
-      <div class="foot"><span class="logos">${us.map(u=>logo(u.id,u.name)).join("")}</span><span>${esc(c.level)}</span></div>
+      <div class="foot"><span class="logos">${us.map(u=>logo(u.id,u.name)).join("")}</span>${c.materials?`<span class="mat-tag">${I.file}${c.materials.length} slides</span>`:""}<span>${esc(c.level)}</span></div>
     </div></a>`;
 }
 
@@ -1360,6 +1381,7 @@ teaching(){
     <div class="counts"><div><b>${SITE.courses.length}</b>courses</div><div><b>${SITE.universities.filter(u=>SITE.courses.some(c=>cIds(c).includes(u.id))).length}</b>universities</div></div>
   </div>`;
   const body=`<div class="wrap">
+    ${SITE.courses.filter(c=>c.materials).map(c=>`<section class="section"><a class="mat-cta wide" href="#materials-${esc(c.id)}"><span class="ico">${I.book}</span><span><strong>Course materials: ${esc(c.title)}</strong><small>${c.materials.length} lecture slide decks as PDF. Open in your browser or download.</small></span><span class="go">Open materials</span></a></section>`).join("")}
     <section class="section"><div class="shead"><h2>Filter by university</h2><p>Select a university to see its courses. Select it again to show all.</p></div>
       <div class="unis" id="uniFilter">${SITE.universities.map(u=>uniCard(u,true)).join("")}</div>
     </section>
@@ -1588,8 +1610,9 @@ function route(){
   const m=$("#main");m.innerHTML=v.body;
   m.classList.remove("enter");void m.offsetWidth;m.classList.add("enter");
   document.querySelectorAll("#navlinks a,#mobileMenu a").forEach(a=>a.getAttribute("href")==="#"+active&&!a.classList.contains("sub-parent")?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
-  document.querySelectorAll("#navlinks .has-sub").forEach(li=>{const on=[...li.querySelectorAll(".submenu a")].some(a=>a.getAttribute("href")==="#"+active);const pa=li.querySelector(".sub-parent");on?pa.setAttribute("aria-current","page"):pa.removeAttribute("aria-current");});
-  document.querySelectorAll(".has-sub").forEach(li=>li.classList.remove("open"));
+  document.querySelectorAll("#navdrop a").forEach(a=>a.getAttribute("href")==="#"+active?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+  document.querySelectorAll("#navlinks .has-sub").forEach(li=>{const on=[...document.querySelectorAll("#navdrop a")].some(a=>a.getAttribute("href")==="#"+active);const pa=li.querySelector(".sub-parent");on?pa.setAttribute("aria-current","page"):pa.removeAttribute("aria-current");});
+
   $("#mobileMenu").hidden=true;$("#menuBtn").setAttribute("aria-expanded","false");
   wireWorkshop(m);
   v.after&&v.after();
@@ -1598,9 +1621,29 @@ function route(){
 }
 
 /* ---------- chrome ---------- */
-$("#navlinks").innerHTML=NAV.map(([k,l,sub])=>sub?`<li class="has-sub"><a href="#${k}" class="sub-parent" aria-haspopup="true">${l}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a><div class="submenu"><ul>${sub.map(([sk,sl],i)=>`<li><a href="#${sk}"><span class="si">${SUBICON[i]||""}</span><span><b>${sl}</b><small>${SUBDESC[sk]||""}</small></span></a></li>`).join("")}</ul></div></li>`:`<li><a href="#${k}">${l}</a></li>`).join("");
-document.querySelectorAll("#navlinks .has-sub").forEach(li=>{const pa=li.querySelector(".sub-parent");pa.addEventListener("click",e=>{if(matchMedia("(hover: none)").matches){e.preventDefault();li.classList.toggle("open")}});});
-document.addEventListener("click",e=>{if(!e.target.closest(".has-sub"))document.querySelectorAll(".has-sub.open").forEach(li=>li.classList.remove("open"))});
+$("#navlinks").innerHTML=NAV.map(([k,l,sub])=>sub?`<li class="has-sub"><a href="#${k}" class="sub-parent" aria-haspopup="true" aria-expanded="false">${l}<svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></a></li>`:`<li><a href="#${k}">${l}</a></li>`).join("");
+/* dropdown lives at body level so it always sits above page content */
+(function(){
+  const parentLi=document.querySelector("#navlinks .has-sub"); if(!parentLi) return;
+  const pa=parentLi.querySelector(".sub-parent"), sub=NAV.find(n=>n[2])[2];
+  const dd=document.createElement("div"); dd.className="navdrop"; dd.id="navdrop"; dd.hidden=true;
+  dd.innerHTML=`<span class="nd-arrow" aria-hidden="true"></span><p class="nd-head">Research</p><ul>${sub.map(([sk,sl],i)=>`<li><a href="#${sk}"><span class="si">${SUBICON[i]||""}</span><span class="nd-t"><b>${sl}</b><small>${SUBDESC[sk]||""}</small></span><svg class="nd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>`).join("")}</ul>`;
+  document.body.append(dd);
+  let timer=null;
+  const place=()=>{const r=pa.getBoundingClientRect();const w=dd.offsetWidth;let x=r.left+r.width/2-w/2;x=Math.max(12,Math.min(x,innerWidth-w-12));dd.style.left=x+"px";dd.style.top=(r.bottom+10)+"px";dd.style.setProperty("--ax",(r.left+r.width/2-x)+"px")};
+  const show=()=>{clearTimeout(timer);if(innerWidth<=1100)return;dd.hidden=false;place();requestAnimationFrame(()=>dd.classList.add("on"));parentLi.classList.add("open");pa.setAttribute("aria-expanded","true")};
+  const hide=(now)=>{clearTimeout(timer);timer=setTimeout(()=>{dd.classList.remove("on");parentLi.classList.remove("open");pa.setAttribute("aria-expanded","false");setTimeout(()=>{if(!dd.classList.contains("on"))dd.hidden=true},180)},now?0:160)};
+  [parentLi,dd].forEach(el=>{el.addEventListener("mouseenter",show);el.addEventListener("mouseleave",()=>hide())});
+  pa.addEventListener("focus",show);
+  dd.addEventListener("focusout",e=>{if(!dd.contains(e.relatedTarget)&&e.relatedTarget!==pa)hide(true)});
+  pa.addEventListener("click",e=>{if(matchMedia("(hover: none)").matches){e.preventDefault();dd.classList.contains("on")?hide(true):show()}});
+  pa.addEventListener("keydown",e=>{if(e.key==="ArrowDown"){e.preventDefault();show();dd.querySelector("a").focus()}});
+  dd.addEventListener("keydown",e=>{if(e.key==="Escape"){hide(true);pa.focus()}});
+  dd.addEventListener("click",e=>{if(e.target.closest("a"))hide(true)});
+  document.addEventListener("click",e=>{if(!e.target.closest("#navdrop")&&!e.target.closest(".has-sub"))hide(true)});
+  addEventListener("scroll",()=>{if(!dd.hidden)hide(true)},{passive:true});
+  addEventListener("resize",()=>{if(!dd.hidden)place()});
+})();
 $("#mobileMenu").innerHTML=NAVFLAT.map(([k,l])=>`<a href="#${k}">${l}</a>`).join("");
 $("#menuBtn").addEventListener("click",e=>{const mm=$("#mobileMenu");mm.hidden=!mm.hidden;e.currentTarget.setAttribute("aria-expanded",String(!mm.hidden))});
 function renderFooter(){
