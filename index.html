@@ -1356,7 +1356,7 @@ function courseCard(c){
 /* ---------- views ---------- */
 const SUBDESC={topics:"Themes behind my work",projects:"Current and proposed projects",publications:"Papers, ranked and searchable",group:"TrustNet.AI Lab"};
 const SUBICON=['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.8 2.8M16.2 16.2 19 19M5 19l2.8-2.8M16.2 7.8 19 5"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v13H3zM8 7V4h8v3"/><path d="M3 12h18"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h7M9 17h5"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>'];
-const NAV=[["about","About"],["teaching","Teaching"],["publications","Publications"],["projects","Projects"],["awards","Awards"],["service","Service"],["education","Education"]];
+const NAV=[["about","About"],["teaching","Teaching"],["publications","Publications"],["projects","Projects"],["awards","Awards"],["service","Service"],["education","Education & Positions"]];
 const NAVFLAT=NAV.flatMap(n=>n[2]?n[2]:[n]);
 
 const V={
@@ -1595,12 +1595,12 @@ materials(id){
 },
 
 education(){
-  const hero=`<div class="hero-text"><h1>Education</h1><p class="sub">Degrees and academic positions.</p></div>`;
+  const hero=`<div class="hero-text"><h1>Education and Professional Positions</h1><p class="sub">Degrees, teaching appointments and research positions.</p><div class="counts"><div><b>${SITE.education.length}</b>degrees</div><div><b>${SITE.positions.length}</b>professional positions</div></div></div>`;
   const tl=arr=>`<ol class="timeline">${arr.map(e=>`<li>${e.logo&&ASSETS[e.logo]?logo(e.logo,e.school):`<span class="mono" aria-hidden="true">${esc(e.mono||"")}</span>`}
     <div><div class="when">${esc(e.when)}</div><h3>${esc(e.degree)}</h3><div class="where">${esc(e.school)}</div>${e.note?`<p>${esc(e.note)}</p>`:""}</div></li>`).join("")}</ol>`;
   const body=`<div class="wrap"><div class="cols">
     <section class="section"><h2>Degrees</h2>${tl(SITE.education)}</section>
-    <section class="section"><h2>Academic positions</h2>${tl(SITE.positions)}</section>
+    <section class="section"><h2>Professional positions</h2>${tl(SITE.positions)}</section>
   </div></div>`;
   return {hero,body};
 }
