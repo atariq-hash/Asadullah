@@ -1442,7 +1442,7 @@ about(){
   const hero=`<div class="hero-text">
       <h1>${esc(SITE.name)}</h1>
       <p class="sub">${esc(SITE.title)}</p>
-      <div class="actions"><a class="btn light" href="#teaching">View courses</a><a class="btn glass" href="mailto:${esc(SITE.email)}">${I.mail}Email</a></div>
+      <div class="actions"><a class="btn light" href="#teaching">View courses</a><a class="btn glass" href="mailto:${esc(SITE.email)}">${I.mail}Email</a><a class="btn glass" href="mailto:${esc(SITE.email)}?subject=${encodeURIComponent("Getting in touch")}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.4 7.6L3 21l1.5-5.2A8.5 8.5 0 1 1 21 12z"/></svg>Get in touch</a></div>
     </div>`;
   const recent=[...SITE.publications].sort((a,b)=>b.year-a.year).slice(0,4);
   const body=`<div class="wrap layout">
@@ -1735,19 +1735,6 @@ function renderFooter(){
   $("#foot").innerHTML=`
   <div class="foot-cta"><h2>Interested in teaching, research or collaboration?</h2>
     <div class="actions"><a class="btn light" href="mailto:${esc(SITE.email)}">${I.mail}Get in touch</a><a class="btn glass" href="${esc(SITE.lab.url)}" target="_blank" rel="noopener">Visit TrustNet.AI Lab</a></div></div>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <div class="foot-me"><img src="${ASSETS.photo}" alt=""><div><strong>${esc(SITE.name)}</strong><span>Assistant Professor, AI and Robotics</span></div></div>
-      <p>Building trustworthy, privacy-preserving AI for connected systems, and teaching the next generation of computer scientists.</p>
-      <div class="foot-unis">${SITE.universities.map(u=>`<span>${esc(u.short)}</span>`).join("")}</div>
-    </div>
-    <div><h3>Explore</h3><ul class="foot-links">${NAVFLAT.map(([k,l])=>`<li><a href="#${k}">${l}</a></li>`).join("")}</ul></div>
-    <div><h3>Teaching</h3><ul class="foot-links">${SITE.courses.slice(0,6).map(c=>`<li><a href="#course-${esc(c.id)}">${esc(c.title)}</a></li>`).join("")}</ul></div>
-    <div><h3>Connect</h3>
-      <a class="foot-mail" href="mailto:${esc(SITE.email)}">${I.mail}${esc(SITE.email)}</a>
-      <div class="foot-social">${SITE.links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener" aria-label="${esc(l.label)}" title="${esc(l.label)}">${profIcon(l.icon)}</a>`).join("")}</div>
-    </div>
-  </div>
   <div class="foot-bottom"><span>© ${yr} ${esc(SITE.name)}. All rights reserved.</span>
     <button type="button" id="toTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>Back to top</button></div>`;
   $("#toTop").addEventListener("click",()=>window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}));
