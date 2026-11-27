@@ -506,6 +506,36 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .mat-cta strong{font-size:1.05rem}
 .mat-cta.soon-cta{opacity:.75;cursor:default}
 .mat-cta.soon-cta .go{background:rgba(255,255,255,.18);color:#fff}
+/* About: two panels */
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem;align-items:stretch}
+@media (max-width:980px){.duo{grid-template-columns:1fr}}
+.wk.panel{display:flex;flex-direction:column;gap:.7rem;padding:clamp(1.4rem,2.6vw,2.2rem);grid-template-columns:none}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.2rem}
+.panel-head h2{margin:0;color:#fff;font-size:clamp(1.3rem,2vw,1.6rem);letter-spacing:-.02em}
+.panel-note{font-size:.85rem;color:rgba(255,255,255,.7)}
+.btn.sm{padding:.45rem .95rem;font-size:.86rem}
+.btn.sm svg{width:15px;height:15px}
+.wk.panel .wk-tags{margin:0}
+.panel-title{margin:0;color:#fff;font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.25;letter-spacing:-.02em}
+.wk.panel .wk-host{margin:0;font-size:.95rem}
+.wk.panel .wk-sum{margin:0;font-size:.92rem}
+.wk.panel .wk-actions{margin:.2rem 0}
+.wk.panel .wk-until{margin:.6rem 0 0}
+.wk.panel .wk-dates li{padding:.7rem .95rem}
+.upd{list-style:none;margin:0;padding:0 .4rem 2.5rem 0;position:relative;display:grid;align-content:start;gap:.15rem;max-height:480px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.3) transparent;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
+@media (min-width:981px){.duo>.panel:last-child{contain:size}.duo>.panel:last-child .upd{flex:1;min-height:0;max-height:none}}
+.upd-hint{margin:.2rem 0 0;font-size:.78rem;color:rgba(255,255,255,.65);text-align:center}
+.upd li{position:relative;display:grid;grid-template-columns:56px 1fr;gap:1rem;padding:.55rem 0}
+.upd li:not(:last-child)::before{content:"";position:absolute;left:27px;top:calc(.55rem + 56px);bottom:calc(-.55rem - .15rem);width:2px;background:rgba(255,255,255,.22)}
+.upd-logo{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#fff;padding:.35rem;box-shadow:0 8px 18px -10px rgba(0,0,0,.5);position:relative;z-index:1;overflow:hidden}
+.upd-logo img{width:100%;height:100%;object-fit:contain}
+.upd-logo.t-navy{background:#0D1D41;padding:0}
+.upd-logo.t-qm{background:rgb(25,56,121);padding:.2rem}
+.upd-body{padding-top:.25rem}
+.upd-date{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#A9D8FF}
+.upd-date em{font-style:normal;font-size:.66rem;letter-spacing:.06em;padding:.12rem .45rem;border-radius:6px;background:#16A765;color:#fff}
+.upd-body p{margin:.2rem 0 0;color:#fff;font-size:.95rem;line-height:1.45}
+.upd li.new .upd-logo{box-shadow:0 0 0 3px rgba(46,229,157,.55),0 8px 18px -10px rgba(0,0,0,.5)}
 /* service v2 */
 /* page side margins halved: content widens so the empty space at each side is half what it was */
 .wrap{max-width:calc(50vw + 560px);padding-left:1rem;padding-right:1rem}
@@ -1029,6 +1059,7 @@ const SITE = {
   ]
  }
 ],
+  updates: [{"date": "Aug 2026", "text": "Joined New Uzbekistan University as Assistant Professor of AI and Robotics", "logo": "nuu_card", "tile": "navy"}, {"date": "Jan 2026", "text": "Joined Canadian University Dubai as Visiting Assistant Professor", "logo": "cud_card"}, {"date": "Jan 2026", "text": "Started as Postdoctoral Researcher at Zayed University", "logo": "zu_card"}, {"date": "Dec 2025", "text": "Completed PhD in Computing and Informatics at United Arab Emirates University", "logo": "uaeu_card"}, {"date": "Nov 2025", "text": "Co-investigator on an AED 299,750 Zayed University grant for AI-driven cardiovascular care", "logo": "zu_card"}, {"date": "Aug 2025", "text": "Joined the Emirates Center for Mobility Research, UAEU, as Research Associate", "logo": "uaeu_card"}, {"date": "Jun 2025", "text": "Visiting Researcher at Queen Mary University of London with the SAYED Systems Group", "logo": "qmul_card", "tile": "qm"}, {"date": "Aug 2023", "text": "Joined United Arab Emirates University as Adjunct Instructor", "logo": "uaeu_card"}, {"date": "Jan 2022", "text": "Awarded a fully funded PhD Fellowship at United Arab Emirates University", "logo": "uaeu_card"}, {"date": "Aug 2019", "text": "Joined The Superior University as Lecturer in Computer Science", "logo": "superior_card"}],
   workshop: {
     acronym: "FLAIRE-NextG",
     title: "Federated Learning for AI-native, Interpretable, and Resilient Edge Intelligence in NextG Wireless Networks",
@@ -1350,6 +1381,31 @@ function featuredPubs(){
     </aside>
   </article>`;
 }
+function pubPanel(){
+  const all=[...SITE.publications].sort((a,b)=>b.year-a.year||(a.status==="accepted")-(b.status==="accepted"));
+  const f=all[0], rest=all.slice(1,4);
+  const ext='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  return `<article class="wk panel">
+    <div class="panel-head"><h2>Recent publications</h2><a class="btn glass sm" href="#publications">All ${SITE.publications.length}</a></div>
+    <ul class="wk-tags"><li>Latest</li><li>${f.type==="conference"?"Conference":"Journal"}</li>${f.badge?`<li>${esc(f.badge)}</li>`:""}<li>${f.year}</li></ul>
+    <h3 class="panel-title">${esc(f.title)}</h3>
+    <p class="wk-host">${esc(f.venue)}</p>
+    <p class="wk-sum">${boldSelf(f.authors)}</p>
+    ${f.doi?`<div class="wk-actions"><a class="btn light sm" href="https://doi.org/${esc(f.doi)}" target="_blank" rel="noopener">Read the paper ${ext}</a></div>`:""}
+    <p class="wk-until">More recent work</p>
+    <ol class="wk-dates">${rest.map(p=>`<li><span>${esc(p.venue.split(",")[0])}, ${p.year}</span><b class="pt">${esc(p.title)}</b></li>`).join("")}</ol>
+  </article>`;
+}
+function updatesPanel(){
+  return `<article class="wk panel">
+    <div class="panel-head"><h2>Latest updates</h2><span class="panel-note">News and milestones</span></div>
+    <ol class="upd">${SITE.updates.map((u,i)=>`<li class="${i===0?"new":""}">
+      <span class="upd-logo${u.tile?" t-"+u.tile:""}"><img src="${ASSETS[u.logo]}" alt=""></span>
+      <div class="upd-body"><span class="upd-date">${esc(u.date)}${i===0?'<em>New</em>':""}</span><p>${esc(u.text)}</p></div>
+    </li>`).join("")}</ol>
+    <p class="upd-hint">Scroll for more</p>
+  </article>`;
+}
 function uniMarquee(){
   const item=(u,hidden)=>`<a class="mq-item" href="#teaching"${hidden?' aria-hidden="true" tabindex="-1"':""}><span class="mq-logo">${logo(u.main||u.id,hidden?"":u.name)}</span><span class="mq-name">${esc(u.name)}</span>${u.current?'<span class="pill">Active</span>':`<span class="mq-place">${esc(u.place)}</span>`}</a>`;
   const reps=Math.max(2,Math.ceil(8/SITE.universities.length));
@@ -1480,7 +1536,7 @@ about(){
       ${uniMarquee()}
     </section>
     <section class="section"><h2>Courses taught by ${esc(SITE.name)}</h2><div class="grid">${SITE.courses.map(courseCard).join("")}</div></section>
-    <section class="section"><div class="shead"><h2>Recent publications</h2><a class="btn" href="#publications">All publications</a></div>${featuredPubs()}</section>
+    <section class="section"><div class="duo">${pubPanel()}${updatesPanel()}</div></section>
     <section class="section"><div class="shead"><h2>Upcoming workshop</h2><a class="btn" href="#service">All service</a></div>${workshopBanner()}</section>
   </div>`;
   return {hero,body,card:true};
