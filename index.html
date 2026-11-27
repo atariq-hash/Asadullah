@@ -536,6 +536,33 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);bord
 .upd-date em{font-style:normal;font-size:.66rem;letter-spacing:.06em;padding:.12rem .45rem;border-radius:6px;background:#16A765;color:#fff}
 .upd-body p{margin:.2rem 0 0;color:#fff;font-size:.95rem;line-height:1.45}
 .upd li.new .upd-logo{box-shadow:0 0 0 3px rgba(46,229,157,.55),0 8px 18px -10px rgba(0,0,0,.5)}
+/* gallery */
+.gal{columns:3 300px;column-gap:1rem}
+.gi{break-inside:avoid;margin:0 0 1rem}
+.gi[hidden]{display:none}
+.gi-btn{position:relative;display:block;width:100%;padding:0;border:0;border-radius:20px;overflow:hidden;cursor:zoom-in;background:var(--sunk);box-shadow:var(--shadow);text-align:left}
+.gi-btn img{display:block;width:100%;height:auto;transition:transform .5s cubic-bezier(.2,.7,.3,1)}
+.gi-btn:hover img,.gi-btn:focus-visible img{transform:scale(1.05)}
+.gi-btn figcaption{position:absolute;inset:auto 0 0 0;padding:2.4rem 1.1rem 1rem;background:linear-gradient(180deg,transparent,rgba(12,8,40,.85));color:#fff;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.gi-btn:hover figcaption,.gi-btn:focus-visible figcaption{opacity:1;transform:none}
+.gi-btn figcaption b{display:block;font-size:1rem;font-weight:600}
+.gi-btn figcaption span{display:block;font-size:.85rem;color:rgba(255,255,255,.8);margin-top:.15rem}
+.gi-cat{position:absolute;top:.8rem;left:.8rem;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.25rem .6rem;border-radius:7px;background:rgba(255,255,255,.88);color:#2810A6;backdrop-filter:blur(6px)}
+.lb{position:fixed;inset:0;z-index:300;display:grid;grid-template-columns:64px 1fr 64px;align-items:center;gap:.5rem;padding:calc(1rem + env(safe-area-inset-top,0px)) 1rem calc(1rem + env(safe-area-inset-bottom,0px));background:rgba(8,5,28,.92);backdrop-filter:blur(8px);opacity:0;transition:opacity .2s}
+.lb.on{opacity:1}
+.lb[hidden]{display:none}
+.lb-fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:.9rem;max-height:100%;min-width:0}
+.lb-fig img{max-width:100%;max-height:calc(100vh - 170px);object-fit:contain;border-radius:16px;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+.lb-fig figcaption{text-align:center;color:#fff}
+.lb-fig b{display:block;font-size:1.1rem;font-weight:600}
+.lb-fig span{display:block;color:rgba(255,255,255,.78);font-size:.92rem;margin-top:.2rem}
+.lb-fig small{display:block;color:rgba(255,255,255,.55);font-size:.8rem;margin-top:.35rem}
+.lb-nav,.lb-x{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;cursor:pointer}
+.lb-nav:hover,.lb-x:hover{background:rgba(255,255,255,.22)}
+.lb-nav svg,.lb-x svg{width:22px;height:22px}
+.lb-x{position:absolute;top:calc(1rem + env(safe-area-inset-top,0px));right:1rem;width:46px;height:46px}
+@media (max-width:640px){.lb{grid-template-columns:1fr}.lb-nav{position:absolute;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px))}.lb-nav.prev{left:1.2rem}.lb-nav.next{right:1.2rem}.lb-fig img{max-height:calc(100vh - 230px)}}
+@media (prefers-reduced-motion:reduce){.gi-btn img{transition:none}.gi-btn:hover img{transform:none}}
 /* service v2 */
 .sub-org{font-weight:inherit;color:inherit}
 /* page side margins halved: content widens so the empty space at each side is half what it was */
@@ -1062,6 +1089,7 @@ const SITE = {
  }
 ],
   updates: [{"date": "Aug 2026", "text": "Joined New Uzbekistan University as Assistant Professor of AI and Robotics", "logo": "nuu_card", "tile": "navy"}, {"date": "Jan 2026", "text": "Joined Canadian University Dubai as Visiting Assistant Professor", "logo": "cud_card"}, {"date": "Jan 2026", "text": "Started as Postdoctoral Researcher at Zayed University", "logo": "zu_card"}, {"date": "Dec 2025", "text": "Completed PhD in Computing and Informatics at United Arab Emirates University", "logo": "uaeu_card"}, {"date": "Nov 2025", "text": "Co-investigator on an AED 299,750 Zayed University grant for AI-driven cardiovascular care", "logo": "zu_card"}, {"date": "Aug 2025", "text": "Joined the Emirates Center for Mobility Research, UAEU, as Research Associate", "logo": "uaeu_card"}, {"date": "Jun 2025", "text": "Visiting Researcher at Queen Mary University of London with the SAYED Systems Group", "logo": "qmul_card", "tile": "qm"}, {"date": "Aug 2023", "text": "Joined United Arab Emirates University as Adjunct Instructor", "logo": "uaeu_card"}, {"date": "Jan 2022", "text": "Awarded a fully funded PhD Fellowship at United Arab Emirates University", "logo": "uaeu_card"}, {"date": "Aug 2019", "text": "Joined The Superior University as Lecturer in Computer Science", "logo": "superior_card"}],
+  gallery: [{"src": "photo", "title": "Asadullah Tariq", "caption": "At New Uzbekistan University, Tashkent", "cat": "People"}, {"src": "b_nuu", "title": "New Uzbekistan University", "caption": "Campus, Tashkent, Uzbekistan", "cat": "Campuses"}, {"src": "b_zu", "title": "Zayed University", "caption": "Abu Dhabi campus, UAE", "cat": "Campuses"}, {"src": "b_uaeu", "title": "United Arab Emirates University", "caption": "Al Ain, UAE", "cat": "Campuses"}, {"src": "b_qmul", "title": "Queen Mary University of London", "caption": "Mile End campus, London, UK", "cat": "Campuses"}, {"src": "b_cud", "title": "Canadian University Dubai", "caption": "Dubai, UAE", "cat": "Campuses"}, {"src": "b_superior", "title": "The Superior University", "caption": "Lahore, Pakistan", "cat": "Campuses"}, {"src": "wk_banner", "title": "FLAIRE-NextG at IWCMC 2027", "caption": "Workshop in Barcelona, Spain", "cat": "Events"}, {"src": "pj_causal", "title": "Causal AI meets Physical AI", "caption": "TrustNet.AI Lab research project", "cat": "Research"}, {"src": "pj_cvd", "title": "AI for cardiovascular care", "caption": "Zayed University funded project", "cat": "Research"}, {"src": "pj_uzev", "title": "UzEV-AI Nexus", "caption": "Generative AI for Uzbekistan’s net-zero vision", "cat": "Research"}, {"src": "bn_qmul_visit", "title": "Federated learning and mixture of experts", "caption": "Visiting research, Queen Mary University of London", "cat": "Research"}],
   workshop: {
     acronym: "FLAIRE-NextG",
     title: "Federated Learning for AI-native, Interpretable, and Resilient Edge Intelligence in NextG Wireless Networks",
@@ -1508,7 +1536,7 @@ function courseCard(c){
 /* ---------- views ---------- */
 const SUBDESC={topics:"Themes behind my work",projects:"Current and proposed projects",publications:"Papers, ranked and searchable",group:"TrustNet.AI Lab"};
 const SUBICON=['<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.8 2.8M16.2 16.2 19 19M5 19l2.8-2.8M16.2 7.8 19 5"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v13H3zM8 7V4h8v3"/><path d="M3 12h18"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h7M9 17h5"/></svg>','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>'];
-const NAV=[["about","About"],["teaching","Teaching"],["publications","Publications"],["projects","Projects"],["awards","Awards"],["service","Service"],["education","Education & Positions"]];
+const NAV=[["about","About"],["teaching","Teaching"],["publications","Publications"],["projects","Projects"],["awards","Awards"],["gallery","Gallery"],["service","Service"],["education","Education & Positions"]];
 const NAVFLAT=NAV.flatMap(n=>n[2]?n[2]:[n]);
 
 const V={
@@ -1647,6 +1675,36 @@ publications(){
     };
     document.querySelectorAll(".tools button.chip").forEach(b=>b.addEventListener("click",()=>{k=b.dataset.k;document.querySelectorAll(".tools button.chip").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));draw()}));
     q.addEventListener("input",draw);draw();
+  }};
+},
+
+gallery(){
+  const G=SITE.gallery, cats=["All",...new Set(G.map(g=>g.cat))];
+  const src=g=>ASSETS[g.src]||g.src;
+  const body=`<div class="wrap"><section class="section">
+    <div class="tools"><ul class="chips" role="group" aria-label="Filter photos">${cats.map((c,i)=>`<li><button class="chip" type="button" data-c="${esc(c)}" aria-pressed="${i===0}">${esc(c)} <span class="n">${c==="All"?G.length:G.filter(g=>g.cat===c).length}</span></button></li>`).join("")}</ul></div>
+    <div class="gal" id="gal">${G.map((g,i)=>`<figure class="gi" data-c="${esc(g.cat)}"><button type="button" class="gi-btn" data-i="${i}" aria-label="Open photo: ${esc(g.title)}"><img src="${src(g)}" alt="${esc(g.title)}" loading="lazy"><figcaption><b>${esc(g.title)}</b><span>${esc(g.caption)}</span></figcaption><span class="gi-cat">${esc(g.cat)}</span></button></figure>`).join("")}</div>
+  </section></div>
+  <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb-x" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-nav prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+    <figure class="lb-fig"><img alt=""><figcaption><b></b><span></span><small></small></figcaption></figure>
+    <button class="lb-nav next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+  </div>`;
+  return {hero:"",body,after(){
+    let cat="All",list=G.map((g,i)=>i),cur=0;const lb=$("#lb"),img=lb.querySelector("img"),cap=lb.querySelector("figcaption");
+    const show=k=>{cur=(k+list.length)%list.length;const g=G[list[cur]];img.src=src(g);img.alt=g.title;cap.querySelector("b").textContent=g.title;cap.querySelector("span").textContent=g.caption;cap.querySelector("small").textContent=`${cur+1} / ${list.length}`};
+    const open=i=>{list=G.map((g,j)=>j).filter(j=>cat==="All"||G[j].cat===cat);show(list.indexOf(i));lb.hidden=false;requestAnimationFrame(()=>lb.classList.add("on"));document.body.style.overflow="hidden";lb.querySelector(".lb-x").focus()};
+    const close=()=>{lb.classList.remove("on");setTimeout(()=>{lb.hidden=true},200);document.body.style.overflow=""};
+    document.querySelectorAll(".gi-btn").forEach(b=>b.addEventListener("click",()=>open(+b.dataset.i)));
+    lb.querySelector(".lb-x").addEventListener("click",close);
+    lb.querySelector(".prev").addEventListener("click",()=>show(cur-1));
+    lb.querySelector(".next").addEventListener("click",()=>show(cur+1));
+    lb.addEventListener("click",e=>{if(e.target===lb)close()});
+    const key=e=>{if(lb.hidden)return;if(e.key==="Escape")close();if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1)};
+    document.addEventListener("keydown",key);
+    let sx=null;lb.addEventListener("touchstart",e=>{sx=e.touches[0].clientX},{passive:true});lb.addEventListener("touchend",e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)show(cur+(dx<0?1:-1));sx=null});
+    document.querySelectorAll(".tools button.chip").forEach(b=>b.addEventListener("click",()=>{cat=b.dataset.c;document.querySelectorAll(".tools button.chip").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));document.querySelectorAll(".gi").forEach(f=>{f.hidden=!(cat==="All"||f.dataset.c===cat)})}));
   }};
 },
 
